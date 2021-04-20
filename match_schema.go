@@ -9,7 +9,7 @@ import (
 	"github.com/onsi/gomega/types"
 )
 
-const ErrorMsg = "(field at position %d of row %d should have been of type %s)"
+const errorMsg = "(field at position %d of row %d should have been of type %s)"
 
 type RepresentSchemaOption func(*representSchemaMatcher)
 
@@ -60,19 +60,19 @@ func (matcher *representSchemaMatcher) Match(actual interface{}) (success bool, 
 			case int:
 				_, err := strconv.Atoi(v[i])
 				if err != nil {
-					matcher.lastError = fmt.Sprintf(ErrorMsg, i+1, r+1, "int")
+					matcher.lastError = fmt.Sprintf(errorMsg, i+1, r+1, "int")
 					return false, nil
 				}
 			case bool:
 				_, err := strconv.ParseBool(v[i])
 				if err != nil {
-					matcher.lastError = fmt.Sprintf(ErrorMsg, i+1, r+1, "bool")
+					matcher.lastError = fmt.Sprintf(errorMsg, i+1, r+1, "bool")
 					return false, nil
 				}
 			case float64:
 				_, err := strconv.ParseFloat(v[i], 64)
 				if err != nil {
-					matcher.lastError = fmt.Sprintf(ErrorMsg, i+1, r+1, "float64")
+					matcher.lastError = fmt.Sprintf(errorMsg, i+1, r+1, "float64")
 					return false, nil
 				}
 			default:
