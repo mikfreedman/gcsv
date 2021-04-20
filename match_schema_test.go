@@ -14,7 +14,7 @@ func TestCustomMatcher(t *testing.T) {
 	RunSpecs(t, "Custom Matcher Suite")
 }
 
-var _ = Describe("MatchSchema Object", func() {
+var _ = Describe("RepresentSchema Object", func() {
 	var (
 		data   string
 		actual []interface{}
