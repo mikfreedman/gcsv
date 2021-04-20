@@ -21,9 +21,9 @@ import (
   . "github.com/mikfreedman/gcsv"
 )
 
-Expect("a,b,c,1,2,3").To(RepresentSchema([]interace{"a","b","c",1,2,3})) // Pass
-Expect("a,b,c,d,e,f").To(RepresentSchema([]interace{"a","b","c",1,2,3})) // Fail!
+Expect("a,b,c,1,2,3").To(RepresentSchema([]interface{"a","b","c",1,2,3})) // Pass
+Expect("a,b,c,d,e,f").To(RepresentSchema([]interface{"a","b","c",1,2,3})) // Fail!
 
-Expect("header1,header2,header3,header4,header5,header6\na,b,c,d,e,f").To(RepresentSchema([]interace{"a","b","c",1,2,3}, IgnoreHeaderRow())) // Pass
+Expect("header1,header2,header3,header4,header5,header6\na,b,c,d,e,f").To(RepresentSchema([]interface{"a","b","c",1,2,3}, IgnoreHeaderRow())) // Pass
 
 ```
