@@ -40,7 +40,7 @@ type representSchemaMatcher struct {
 func (matcher *representSchemaMatcher) Match(actual interface{}) (success bool, err error) {
 	response, ok := actual.(string)
 	if !ok {
-		return false, fmt.Errorf("representSchema matcher expects a string, got %T instead", response)
+		return false, fmt.Errorf("representSchema matcher expects a string, got %T instead", actual)
 	}
 
 	lines, err := csv.NewReader(strings.NewReader(response)).ReadAll()

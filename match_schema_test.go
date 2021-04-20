@@ -28,7 +28,6 @@ var _ = Describe("RepresentSchema Object", func() {
 			1,
 			false,
 		}
-
 	})
 
 	Context("containing the csv with a schema of actual", func() {
