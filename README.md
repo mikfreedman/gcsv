@@ -15,7 +15,7 @@ Verifies that an entire CSV matches the actual schema of an `[]interface{}` arra
 * `float64`
 * `string` 
 
-*Note: Values for the actual schema are representative only and don't mean anything in and of themselves, they are just used for [switching on type](/match_schema.go#L57)
+*Note: Values for the actual schema are representative only and don't mean anything in and of themselves, they are just used for [switching on type](/match_schema.go#L57)*
 
 ```go
 import (
