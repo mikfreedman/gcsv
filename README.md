@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/mikfreedman/gcsv)](https://goreportcard.com/report/github.com/mikfreedman/gcsv)
+[![Go Build](https://github.com/mikfreedman/gcsv/actions/workflows/go.yml/badge.svg)](https://github.com/mikfreedman/gcsv/actions/workflows/go.yml/badge.svg)
 
 Gomega matchers for CSV Schema
 ==================================
