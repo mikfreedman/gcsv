@@ -28,4 +28,8 @@ Expect("a,b,c,d,e,f").To(RepresentSchema([]interface{"a","b","c",1,2,3})) // Fai
 Expect("header1,header2,header3,header4,header5,header6\na,b,c,d,e,f").
   To(RepresentSchema([]interface{"a","b","c",1,2,3}, IgnoreHeaderRow())) // Pass
 
+Expect("header1,header2,header3,header4,header5,header6\na,b,c,d,e,f").
+  To(RepresentSchema([]interface{"a","b","c",1,2,3}, WithHeaders("jeepers", "creepers"))) // Fail!
+
+
 ```

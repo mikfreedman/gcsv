@@ -47,6 +47,26 @@ var _ = Describe("RepresentSchema Object", func() {
 				Ω(data).Should(RepresentSchema(actual, IgnoreHeaderRow()))
 			})
 		})
+
+		Context("with headers that I care about", func() {
+			BeforeEach(func() {
+				data = "category,item,price,quantity,exported\nflowers,roses,4.0,1,false\nflowers,roses,4.0,1,false"
+			})
+
+			Context("and the headers match", func() {
+				It("should succeed", func() {
+					Ω(data).Should(RepresentSchema(actual, WithHeaders("category", "item", "price", "quantity", "exported")))
+				})
+			})
+
+			Context("and the headers do not match", func() {
+				It("should not succeed", func() {
+					_, err := RepresentSchema(actual, WithHeaders("apple", "pear", "peach")).Match(1)
+					Ω(err).Should(HaveOccurred())
+				})
+			})
+		})
+
 	})
 
 	Context("containing the csv with a schema of something else", func() {

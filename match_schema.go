@@ -3,6 +3,7 @@ package gcsv
 import (
 	"encoding/csv"
 	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -16,6 +17,12 @@ type RepresentSchemaOption func(*representSchemaMatcher)
 func IgnoreHeaderRow() RepresentSchemaOption {
 	return func(matcher *representSchemaMatcher) {
 		matcher.ignoreHeaderRow = true
+	}
+}
+
+func WithHeaders(headers ...string) RepresentSchemaOption {
+	return func(matcher *representSchemaMatcher) {
+		matcher.withHeaders = headers
 	}
 }
 
@@ -34,6 +41,7 @@ func RepresentSchema(expected []interface{}, opts ...RepresentSchemaOption) type
 type representSchemaMatcher struct {
 	expected        []interface{}
 	ignoreHeaderRow bool
+	withHeaders     []string
 	lastError       string
 }
 
@@ -50,8 +58,18 @@ func (matcher *representSchemaMatcher) Match(actual interface{}) (success bool, 
 	}
 
 	for r, v := range lines {
-		if matcher.ignoreHeaderRow && r == 0 {
-			continue
+		if r == 0 {
+			switch {
+			case matcher.ignoreHeaderRow:
+				continue
+			case len(matcher.withHeaders) > 0:
+				if reflect.DeepEqual(v, matcher.withHeaders) {
+					continue
+				}
+
+				matcher.lastError = "headers do not match"
+				return false, nil
+			}
 		}
 
 		for i, e := range matcher.expected {
@@ -84,9 +102,9 @@ func (matcher *representSchemaMatcher) Match(actual interface{}) (success bool, 
 }
 
 func (matcher *representSchemaMatcher) FailureMessage(actual interface{}) (message string) {
-	return fmt.Sprintf("Expected\n\t%#v\nto contain a CSV matching the schema of\n\t%#v\nfor every row\n%s", actual, matcher.expected, matcher.lastError)
+	return fmt.Sprintf("Expected\n\t%#v\nto contain a CSV matching the schema of\n\t%#v\n%s", actual, matcher.expected, matcher.lastError)
 }
 
 func (matcher *representSchemaMatcher) NegatedFailureMessage(actual interface{}) (message string) {
-	return fmt.Sprintf("Expected\n\t%#v\nnot to contain a CSV matching the schema of\n\t%#v\nfor every row\n%s", actual, matcher.expected, matcher.lastError)
+	return fmt.Sprintf("Expected\n\t%#v\nnot to contain a CSV matching the schema of\n\t%#v\n%s", actual, matcher.expected, matcher.lastError)
 }
